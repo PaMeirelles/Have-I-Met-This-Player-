@@ -1,4 +1,5 @@
 import requests
+import time
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
@@ -34,6 +35,24 @@ def simple_search(name1, name2, region):
   matches2 = get_matches(puuid2)
 
   return set(matches1) & set(matches2)
+
+def get_players(match_id):
+  match = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/{match_id}", headers=headers)
+  try:
+    p = match.json()["metadata"]["participants"]
+  except KeyError:
+    print(match)
+  return p
+
   
-x = simple_search("PyMeirelles", "Grasolar", "BR1")
-print(x, len(x))
+player1 = "PyMeirelles"
+player2 = "pllucazz"
+region = "BR1"
+
+
+print("Simple search")
+start = time.perf_counter()
+x = simple_search(player1, player2, region)
+stop = time.perf_counter()
+print(len(x))
+print(str(round(stop-start, 2)) + "s")
