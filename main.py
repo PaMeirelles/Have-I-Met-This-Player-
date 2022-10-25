@@ -2,14 +2,15 @@ import time
 from search import *
 
 player1 = "PyMeirelles"
-player2 = "pefofo123"
+player2 = "zeru0itu"
 region = "BR1"
-m = "BR1_2604297919"
-print("Simple search")
+
 start = time.perf_counter()
-# x = simple_search(player1, player2, region)
-x = get_player_result(m)
+
+puuid1 = get_puuid(player1, region)
+puuid2 = get_puuid(player2, region)
+x = get_duo_wr(puuid1, puuid2, ranked_only=True)
+
 stop = time.perf_counter()
-# print(len(x))
 print(x)
 print(str(round(stop-start, 2)) + "s")
